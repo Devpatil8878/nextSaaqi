@@ -9,7 +9,7 @@ export default async function handler(req, res) {
 
   try {
 
-    const users = await User.find().limit(3);
+    const users = await User.find();
 
 
     return res.status(200).json(users);

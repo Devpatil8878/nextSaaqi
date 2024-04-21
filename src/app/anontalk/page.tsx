@@ -260,7 +260,6 @@ if(!isLoggedIn){
   };
 
   useEffect(() => {
-    // Event listener for receiving messages from the server
     socket.on('chat message', message => {
       setMessages(prevMessages => [...prevMessages, message]);
     });
@@ -274,8 +273,8 @@ if(!isLoggedIn){
     
     const messageWithUser = { USER, message: messageInput };
     if (messageInput.trim() !== '') {
-      socket.emit('chat message', messageWithUser); // Send message to server
-      setMessageInput(''); // Clear input field
+      socket.emit('chat message', messageWithUser); 
+      setMessageInput(''); 
     }
     console.log(messageWithUser)
   };
@@ -394,7 +393,7 @@ if(!isLoggedIn){
                             <a href="" key={index} className={`relative h-10 text-sm self-center content-center px-5 rounded-2xl ${ele.USER.displayName == USER.displayName  ? "bg-[#268bf0] rounded-br-none" : "bg-[#424656] rounded-bl-none" } `}>
                               {ele.message}
                               <div className={`text-[0.7rem] gsap bottom-[-1rem] absolute text-zinc-400 ${ele.USER.displayName == USER.displayName ? "right-0" : "left-0"}`}>
-                                {ele.USER.displayName == USER.displayName ? "You" : ele.USER.displayName}
+                                {ele.USER.displayName == USER.displayName ? "You" : "Anonymous User"}
                               </div>
                             </a>
                           </div>

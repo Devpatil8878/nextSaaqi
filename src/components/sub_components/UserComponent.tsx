@@ -146,24 +146,7 @@ const UserAccount: React.FC<UserAccountProps> = ({ isDarkMode }) => {
     <>
       {userData.map((elem, index) => (
         <UserCard userData={elem} key={index} isDarkMode={isDarkMode}/>
-        
-        // <div key={index} className={`${isDarkMode ? "dark-mode-component-bg" : "light-mode-component-bg"} hover:drop-shadow-[0_20px_20px_rgba(58,20,80,0.65)]  friends-animation users w-[95%] h-24 rounded `}>
-        //   <div className="flex">
-        //     <div className="profile">
-        //       <button className='w-12 h-12 flex justify-center items-center rounded-full m-5 ml-8 mr-3 min-w-12'>
-        //         <img className="object-cover overflow-hidden w-full h-full rounded-full" src={elem.profilePicture} alt={`Profile of ${elem.username}`} />    
-        //       </button>
-        //     </div>
-        //     <div className="flex-col">
-        //       <h1 className='text-semibold mt-3'>{elem.fullname}</h1>
-        //       <h4 className='text-xs'>{elem.bio}</h4>
-              
-        //       <button  onClick={() => handleFollowClick(elem, index)} className='w-16 h-6 mt-2 rounded text-[10px] global-theme-color text-white'>
-        //         {`${ true  ? "Unfollow" : "Follow"}`}
-        //       </button>
-        //     </div>
-        //   </div>
-        // </div>
+ 
       ))}
     </>
   );
