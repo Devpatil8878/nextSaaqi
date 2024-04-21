@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap'
+import toast from 'react-hot-toast';
 
 interface FormData {
   email: string;
@@ -42,14 +43,38 @@ const Login = () => {
 
       if (response.ok) {
         console.log('User logged in successfully');
+        toast.success('User Logged in Successfully', {
+          position: 'bottom-right',
+          style: {
+            backgroundColor: "black",
+            color: "white",
+            border: "1px solid white"
+          }
+        });
         router.push("/");
       } else {
         const data = await response.json();
         console.log(data.message || 'Error logging in');
+        toast.error('Error logging in', {
+          position: 'bottom-right',
+          style: {
+            backgroundColor: "black",
+            color: "white",
+            border: "1px solid white"
+          }
+        });
       }
     } catch (error) {
       console.error('Error:', error);
       console.log('Internal Server Error');
+      toast.error('Internal Server Error', {
+        position: 'bottom-right',
+        style: {
+          backgroundColor: "black",
+          color: "white",
+          border: "1px solid white"
+        }
+      });
     }
   };
 

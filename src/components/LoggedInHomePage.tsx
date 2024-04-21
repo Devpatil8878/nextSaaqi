@@ -19,6 +19,7 @@ import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, set } from 'firebase/database'
 import { setTEMPUSER, setUSERFULLINFO } from "@/store/actions";
 import axios from "axios";
+import Storypopup from "./sub_components/Storypopup";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAwFJqTHIokgnBZw-F9fdihAOV0AutSJMU",
@@ -105,9 +106,15 @@ function Homepage() {
     });
   });
 
+  const isStoryActive = useSelector(state => state.rootReducer.isStoryClicked)
+
   return (
     <>
     <Navbar/>
+
+      {/* {isStoryActive === true && <Storypopup />} */}
+
+
       <div className={`${backColor} flex w-screen min-h-screen`}>
         <div
           className={` w-[77%] flex flex-col no-scrollbar pl-32`}

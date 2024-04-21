@@ -9,7 +9,7 @@ import { initializeApp } from 'firebase/app';
 import Login from '../login/page'
 import { useRouter } from 'next/navigation'
 import { FacebookAuthProvider } from "firebase/auth";
-
+import { toast } from 'react-hot-toast';
 import { useSelector, useDispatch } from 'react-redux';
 import { login, logout, toggleDarkMode, setUSER, setTEMPUSER } from '../../store/actions';
 import { Fullscreen } from 'lucide-react';
@@ -91,9 +91,25 @@ const page = () => {
         fullname: user.displayName,
         email: user.email,
       }));
+      toast.success('User Registered Successfully', {
+        position: 'bottom-right',
+        style: {
+          backgroundColor: "black",
+          color: "white",
+          border: "1px solid white"
+        }
+      });
     })
     .catch((error) => {
-      console.error("Error signing in with Google: ", error);
+      console.error("Error signing up with Google: ", error);
+      toast.error('Error signing up with Google', {
+        position: 'bottom-right',
+        style: {
+          backgroundColor: "black",
+          color: "white",
+          border: "1px solid white"
+        }
+      });
     });
   }
 

@@ -1,12 +1,13 @@
 // reducers.js
-import { LOGIN, LOGOUT, TOGGLE_DARK_MODE, SET_USER, SET_USERFULLINFO, SET_TEMPUSER } from '../actions/index';
+import { LOGIN, LOGOUT, TOGGLE_DARK_MODE, SET_USER, SET_USERFULLINFO, SET_TEMPUSER, SET_STORYCLICKED, setSTORYCLICKEDTRUE, setSTORYCLICKEDFALSE } from '../actions/index';
 
 const initialState = {
   isLoggedIn: false,
   isDarkMode: true,
   user: {},
   fullUserInfo: {},
-  tempUser: {}
+  tempUser: {},
+  isStoryClicked: false
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -40,7 +41,13 @@ const rootReducer = (state = initialState, action) => {
       return{
         ...state,
         tempUser: action.payload
+      };
+    case SET_STORYCLICKED:
+      return{
+        ...state,
+        isStoryClicked: action.payload
       }
+
     default:
       return state;
   }

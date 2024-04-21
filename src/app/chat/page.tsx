@@ -260,7 +260,6 @@ if(!isLoggedIn){
   };
 
   useEffect(() => {
-    // Event listener for receiving messages from the server
     socket.on('chat message', message => {
       setMessages(prevMessages => [...prevMessages, message]);
     });
@@ -274,8 +273,8 @@ if(!isLoggedIn){
     
     const messageWithUser = { USER, message: messageInput };
     if (messageInput.trim() !== '') {
-      socket.emit('chat message', messageWithUser); // Send message to server
-      setMessageInput(''); // Clear input field
+      socket.emit('chat message', messageWithUser); 
+      setMessageInput(''); 
     }
     console.log(messageWithUser)
   };

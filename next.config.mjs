@@ -7,6 +7,11 @@ const nextConfig = {
         hostname: '**.pngegg.com',
         port: '',
       },
+      {
+        protocol: 'https',
+        hostname: '**.amazonaws.com',
+        port: '',
+      },
     ],
   },
 

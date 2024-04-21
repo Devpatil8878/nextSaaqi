@@ -16,6 +16,7 @@ import { Fullscreen } from 'lucide-react';
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react';
 import Image from 'next/image';
+import { toast } from 'react-hot-toast';
 
 
 const firebaseConfig = {
@@ -93,9 +94,26 @@ const page = () => {
         email: user.email,
       }));
       dispatch(login());
+      toast.success('User LoggedIn Successfully', {
+        position: 'bottom-right',
+        style: {
+          backgroundColor: "black",
+          color: "white",
+          border: "1px solid white"
+        }
+      });
+      
     })
     .catch((error) => {
       console.error("Error signing in with Google: ", error);
+      toast.error('Error signing in with Google', {
+        position: 'bottom-right',
+        style: {
+          backgroundColor: "black",
+          color: "white",
+          border: "1px solid white"
+        }
+      });
     });
   }
 

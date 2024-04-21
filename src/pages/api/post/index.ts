@@ -13,7 +13,7 @@ import { MongoClient } from 'mongodb';
 const client = new MongoClient("mongodb+srv://DEV:devanand@saaqi.hk5f3oi.mongodb.net/?retryWrites=true&w=majority&appName=Saaqi");
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { content, email } = req.body;
+  const { content, email, image } = req.body;
 
       if (req.method === 'POST') {
         const token = req.cookies.token;
@@ -31,6 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               const post = await Post.create({
                 content,
                 user: userId,
+                image
               });
           
               const populatedPost = await Post.findById(post._id).populate('user');
@@ -40,18 +41,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 await user.save();
               }
         
-              res.status(201).json({ message: 'Post created successfully', post: populatedPost });
+              return res.status(201).json({ message: 'Post created successfully', post: populatedPost });
             } catch (error) {
               console.error('Error creating post:', error);
-              res.status(501).json({ message: 'Internal Server Error token' });
+              return res.status(501).json({ message: 'Internal Server Error token' });
             }
           } 
         
 
-
-          if(email){
+          
+          // if(email){
+            
             console.log("EMAIL: ", email)
-
 
             try {
               const userEmail = await User.findOne({email});
@@ -63,6 +64,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               const post = await Post.create({
                 content,
                 user: userEmail._id,
+                image
               });
           
               const populatedPost = await Post.findById(post._id).populate('user');
@@ -78,10 +80,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               res.status(500).json({ message: 'Internal Server Error' });
             }
           }
-           else {
-            res.status(405).json({ message: 'Method Not Allowed' });
-          }
-      }
+
+        // }
+
+      //   else {
+      //    res.status(405).json({ message: 'Method Not Allowed' });
+      //  }
       
     
 

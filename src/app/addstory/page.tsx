@@ -1,4 +1,3 @@
-//app/addimages.jsx
 
 "use client"
 
@@ -14,10 +13,10 @@ import { getDatabase, ref, set } from 'firebase/database'
 import { setTEMPUSER, setUSERFULLINFO } from '@/store/actions';
 import axios from 'axios';
 import Link from 'next/link';
-import Storypopup from './Storypopup';
+import { toast } from 'react-hot-toast';
 
 
-function AddStories(): JSX.Element {
+const page = () => {
 
   const [file, setFile] = useState(null);
 
@@ -40,7 +39,12 @@ function AddStories(): JSX.Element {
   const TEMPUSER = useSelector(state => state.rootReducer.tempUser)
   const dispatch = useDispatch()
   const FULLUSERINFO = useSelector(state => state.rootReducer.fullUserInfo)
-  const [userId, setUserId] = useState();
+
+
+  const [formData, setFormData] = useState({
+    id: "",
+    story: ""
+  });
 
 
   useEffect(() => {
@@ -48,15 +52,22 @@ function AddStories(): JSX.Element {
       if(user){
         dispatch(setTEMPUSER(user))
         const userinfo = await axios.get(`/api/findUserByEmail?email=${user.email}`)
-        setUserId(userinfo.data.user._id);
+
           
-          dispatch(setUSERFULLINFO({
-            fullname: userinfo.data.user.fullname,
-            email: userinfo.data.user.email,
-            username: userinfo.data.user.username,
-            bio: userinfo.data.user.bio,
-            profilePicture: userinfo.data.user.profilePicture
-          })) 
+        dispatch(setUSERFULLINFO({
+        fullname: userinfo.data.user.fullname,
+        email: userinfo.data.user.email,
+        username: userinfo.data.user.username,
+        bio: userinfo.data.user.bio,
+        profilePicture: userinfo.data.user.profilePicture
+        })) 
+
+        setFormData(prevState => ({
+            ...prevState,
+            id: userinfo.data.user._id
+        }));
+
+          
       }
       else{
         
@@ -70,10 +81,7 @@ function AddStories(): JSX.Element {
   let email = TEMPUSER.email
 
 
-  const [formData, setFormData] = useState({
-    id: userId,
-    story: ""
-  });
+
 
   const [filepath, setFilepath] = useState("");
 
@@ -84,6 +92,8 @@ function AddStories(): JSX.Element {
     const file = event.target.files?.[0];
     setFile(file)
     if (file) {
+
+        
       
       try {
         const formdata = new FormData();
@@ -98,16 +108,34 @@ function AddStories(): JSX.Element {
         const data = await response.json();
         setFilepath(data.filelocation)
 
+        console.log(data.filelocation); 
+
         setFormData(prevState => ({
           ...prevState,
           story: data.filelocation
         }));
 
+        toast.success('File uploaded successfully', {
+          position: 'bottom-right',
+          style: {
+            backgroundColor: "black",
+            color: "white",
+            border: "1px solid white"
+          }
+        });
+
         dispatch(setUSERFULLINFO(formData))
 
-        console.log(data.filelocation); 
       } catch (error) {
         console.error('Error uploading file:', error);
+        toast.error('Error uploading file', {
+          position: 'bottom-right',
+          style: {
+            backgroundColor: "black",
+            color: "white",
+            border: "1px solid white"
+          }
+        });
      
       }
   
@@ -116,8 +144,12 @@ function AddStories(): JSX.Element {
 
   };
 
+  const router = useRouter()
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+
 
     console.log('Form Data:', formData);
 
@@ -133,8 +165,28 @@ function AddStories(): JSX.Element {
       if (response.ok) {
         console.log("Story uploaded successfully");
 
+        toast.success('Story uploaded successfully', {
+          position: 'bottom-right',
+          style: {
+            backgroundColor: "black",
+            color: "white",
+            border: "1px solid white"
+          }
+        });
+        router.push("/")
+
       } else {
         console.error("Error uploading story");
+
+        toast.error('Error uploading story', {
+          position: 'bottom-right',
+          style: {
+            backgroundColor: "black",
+            color: "white",
+            border: "1px solid white"
+          }
+        });
+        
       }
     } catch (error) {
       console.error("Error:", error);
@@ -150,16 +202,30 @@ function AddStories(): JSX.Element {
     fileInputRef.current.click();
   };
 
-  return (
-    <div>
-       
-        <div className='w-16 h-16 rounded-full relative flex m-5 bg-black border-2 cursor-pointer'>
-          <Link href={"/addstory"} className='w-16 absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-16'/>
-          <h1 className='w-16 h-16 text-center content-center text-3xl font-light'>+</h1>
-        </div>
+
+  return (   
+
+
+    <div className='content-center h-screen bg-black'>
+    <div className='w-[25vw] h-[80vh] relative m-auto content-center bg-black text-center border rounded-xl'>
+        <form onSubmit={handleSubmit} className='flex-col gap-10 '>
+            <div className={`prof relative border-2 w-20 h-20 rounded-full m-auto mb-10`}>
+              <input onChange={handleFileChange} ref={fileInputRef} className='text-black hidden gsap' type="file" name="picture" id="picture" placeholder='' /><br /><br />
+              <button className='gsap w-[100%] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-full h-[100%] cursor-pointer' type='button' onClick={handleButtonClick}></button>
+              <h1 className='absolute top-[50%] left-[50%] text-3xl font-light translate-x-[-45%] translate-y-[-45%] cursor-pointer text-white'>+</h1>
+            </div>
+
+            <br/>
+            <button className='w-[5rem] h-9 gsap cursor-pointer text-white bg-zinc-900 rounded-[8px] text-[14px]' type="submit" value="submit" >Submit</button>
+        </form>
 
     </div>
-  );
+    </div>
+
+
+
+
+  )
 }
 
-export default AddStories;
+export default page

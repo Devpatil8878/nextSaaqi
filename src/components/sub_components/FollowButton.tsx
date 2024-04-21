@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux';
+import { toast } from 'react-hot-toast';
 
 const UserCard = async ({ userData, isDarkMode }) => {
   const [isFollowing, setIsFollowing] = useState(false);
@@ -16,8 +17,9 @@ const UserCard = async ({ userData, isDarkMode }) => {
 
         const response = await axios.get(`/api/checkuserfollowing?currentUserId=${newUserinfo.data.user._id}&followingId=${newVal.data.user._id}`);
 
-        if(response.status == 200)
+        if(response.status == 200){
             setIsFollowing(true);
+        }
         else if(response.status == 201)
             setIsFollowing(false);
       } catch (error) {
@@ -25,8 +27,8 @@ const UserCard = async ({ userData, isDarkMode }) => {
       }
     };
 
-    checkIsFollowing(); // Call the function to check following status when the component is mounted
-  }, [userData.id]); // useEffect will run whenever userData.id changes
+    checkIsFollowing(); 
+  }, [userData.id]); 
 
   const handleFollowClick = async () => {
     try {
@@ -40,6 +42,14 @@ const UserCard = async ({ userData, isDarkMode }) => {
             followingId: newVal.data.user._id,
           });
           console.log("followed: ", newVal.data.user._id)
+          toast.success(`Started following ${newVal.data.user.fullname}`, {
+            position: 'bottom-right',
+            style: {
+              backgroundColor: "black",
+              color: "white",
+              border: "1px solid white"
+            }
+          });
           setIsFollowing(true);
     } else {   
         const resUnfollow = await axios.delete('/api/followUser', {
@@ -49,6 +59,14 @@ const UserCard = async ({ userData, isDarkMode }) => {
             }
         });
         console.log("unfollowed: ", newVal.data.user._id)
+        toast.success(`Unfollowed ${newVal.data.user.fullname}`, {
+          position: 'bottom-right',
+          style: {
+            backgroundColor: "black",
+            color: "white",
+            border: "1px solid white"
+          }
+        });
         setIsFollowing(false);
      }
     } catch (error) {

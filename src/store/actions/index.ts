@@ -5,6 +5,7 @@ export const TOGGLE_DARK_MODE = 'TOGGLE_DARK_MODE';
 export const SET_USER = 'SET_USER'
 export const SET_USERFULLINFO = 'SET_USERFULLINFO'
 export const SET_TEMPUSER = 'SET_TEMPUSER'
+export const SET_STORYCLICKED = 'SET_STORYCLICKED'
 
 
 
@@ -46,3 +47,11 @@ export const setTEMPUSER = (user) => ({
     email: user.email,
   }
 })
+
+export const setSTORYCLICKED = (val) => ({
+  type: SET_STORYCLICKED,
+  payload: {
+    isStoryClicked: val
+  }
+})
+

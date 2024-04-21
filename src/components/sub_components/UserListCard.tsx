@@ -46,9 +46,10 @@ const UserListCard = async ({ userData, isDarkMode }) => {
       }
     };
 
-    checkIsFollowing(); // Call the function to check following status when the component is mounted
-  }, [userData.id]); // useEffect will run whenever userData.id changes
+    checkIsFollowing(); 
+  }, [userData.id]); 
 
+  
   const handleFollowClick = async () => {
     try {
         

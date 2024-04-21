@@ -12,19 +12,16 @@ export default async function handler(req, res) {
       try {
         const { currentUserId, followingId } = req.body;
         
-        // Find the user by ID
         const user = await User.findById(currentUserId);
 
         if (!user) {
           return res.status(404).json({ success: false, message: 'User not found' });
         }
 
-        // Check if the followingId is already in the followings array
         if (user.followings.some(following => following.user === followingId)) {
           return res.status(400).json({ success: false, message: 'User is already in the followings list' });
         }
 
-        // Add the followingId to the followings array
         user.followings.push({ user: followingId });
         await user.save();
 

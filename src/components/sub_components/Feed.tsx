@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface Post {
   username: string;
@@ -49,6 +50,11 @@ const [posts, setPosts] = useState([]);
   }, []);
 
 
+  const handleDoubleClick = () => {
+
+  }
+
+
 
   return (
     <>
@@ -76,8 +82,13 @@ const [posts, setPosts] = useState([]);
               </div>
             </Link>
           </div>
+
           <div className='ml-[3rem] mb-10 pr-20 '>
             {elem.content}
+          </div>
+
+          <div className={`${!elem.image ? 'hidden' : ''} flex `}>
+            <Image src={elem.image} onDoubleClick={handleDoubleClick} height={500} width={700} alt='a' className='rounded-lg m-auto my-10'/>
           </div>
         </div>
       ))}

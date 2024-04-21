@@ -7,7 +7,6 @@ export default async function handler(req, res) {
   
         try {
           const { currentUserId, followingId } = req.query;
-        //   console.log("currentUserId: ", currentUserId)
           
           const user = await User.findById(currentUserId);
   
@@ -19,6 +18,8 @@ export default async function handler(req, res) {
             
             return res.status(200).json({ success: true, message: 'User is in the followings list' });
           }
+
+          return res.status(201).json({ success: false, message: 'User not found' });
           
 
         } catch (error) {

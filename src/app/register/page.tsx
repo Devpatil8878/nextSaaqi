@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react';
+import toast from "react-hot-toast";
 
 
 function Register() {
@@ -42,7 +43,7 @@ function Register() {
     e.preventDefault();
 
     try {
-      const response = await fetch("/api/register", {
+      const response = await fetch("/api/tokenregister", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -52,12 +53,36 @@ function Register() {
 
       if (response.ok) {
         console.log("User registered successfully");
+        toast.success('User registered successfully', {
+          position: 'bottom-right',
+          style: {
+            backgroundColor: "black",
+            color: "white",
+            border: "1px solid white"
+          }
+        });
         router.push("/login");
       } else {
         console.error("Error registering user");
+        toast.error('Error registering user', {
+          position: 'bottom-right',
+          style: {
+            backgroundColor: "black",
+            color: "white",
+            border: "1px solid white"
+          }
+        });
       }
     } catch (error) {
       console.error("Error:", error);
+      toast.error('Error registering user', {
+        position: 'bottom-right',
+        style: {
+          backgroundColor: "black",
+          color: "white",
+          border: "1px solid white"
+        }
+      });
     }
   };
 
@@ -171,7 +196,7 @@ function Register() {
                       />
                     </div>
                     <div className="flex w-full mt-[-20px] ml-28 gap-6">
-                      <Link href={"/other-methods"} className="method gsap w-[28%] h-9 p-2 text-center mt-7 bg-slate-500 text-white rounded-full text-[13px] font-semibold">Change Method</Link>
+                      <Link href={"/other-methods-register"} className="method gsap w-[28%] h-9 p-2 text-center mt-7 bg-slate-500 text-white rounded-full text-[13px] font-semibold">Change Method</Link>
                       
                       <input
                         type="submit"

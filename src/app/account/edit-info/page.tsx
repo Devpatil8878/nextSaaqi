@@ -11,6 +11,7 @@ import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, set } from 'firebase/database'
 import { setTEMPUSER, setUSERFULLINFO } from '@/store/actions';
 import axios from 'axios';
+import { toast } from 'react-hot-toast';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAwFJqTHIokgnBZw-F9fdihAOV0AutSJMU",
@@ -110,9 +111,26 @@ function UserDetails() {
 
         dispatch(setUSERFULLINFO(formData))
 
+        toast.success('File Uploaded Successfully', {
+          position: 'bottom-right',
+          style: {
+            backgroundColor: "black",
+            color: "white",
+            border: "1px solid white"
+          }
+        });
+
         console.log(data.filelocation); 
       } catch (error) {
         console.error('Error uploading file:', error);
+        toast.error('Error uploading file:', {
+          position: 'bottom-right',
+          style: {
+            backgroundColor: "black",
+            color: "white",
+            border: "1px solid white"
+          }
+        });
      
       }
     }
@@ -195,14 +213,17 @@ function UserDetails() {
     });
   });
 
+  console.log(formData)
+
 
   return (
     <div className='content-center h-screen bg-black'>
     <div className='w-[75vw] h-[80vh] m-auto content-center bg-black text-center border rounded-xl'>
         <form onSubmit={handleSubmit} className='flex-col gap-10 '>
-            <div className={`prof bg-[url(${formData.profilePicture || "https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"}) border-2 w-20 h-20 rounded-full m-auto mb-10`}>
+            <div className={`prof relative bg-[url(${formData.profilePicture === "" || "https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"}) border-2 w-20 h-20 rounded-full m-auto mb-10`}>
               <input onChange={handleFileChange} ref={fileInputRef} className='text-black hidden gsap' type="file" name="picture" id="picture" placeholder='' /><br /><br />
-              <button className='gsap w-[100%] h-[100%] cursor-pointer' type='button' onClick={handleButtonClick}>+</button>
+              <button className='gsap w-[100%] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-full h-[100%] cursor-pointer' type='button' onClick={handleButtonClick}></button>
+              <h1 className='absolute top-[50%] left-[50%] text-3xl font-light translate-x-[-45%] translate-y-[-45%] cursor-pointer text-white'>+</h1>
             </div>
             
             <div className="names justify-center items-center flex gap-5 ">
