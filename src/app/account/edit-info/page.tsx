@@ -64,9 +64,6 @@ function UserDetails() {
     })
   }, [])
 
-
-
-  const USER = useSelector(state => state.rootReducer.fullUserInfo)
  
 
   let name = TEMPUSER.fullname
@@ -94,14 +91,14 @@ function UserDetails() {
     if (file) {
       
       try {
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('user', userString);
+        const formdata = new FormData();
+        formdata.append('file', file);
+        formdata.append('user', userString);
 
 
         const response = await fetch('/api/uploadimage', {
           method: 'POST',
-          body: formData,
+          body: formdata,
         });
         const data = await response.json();
         setFilepath(data.filelocation)
@@ -110,6 +107,8 @@ function UserDetails() {
           ...prevState,
           profilepicture: data.filelocation
         }));
+
+        dispatch(setUSERFULLINFO(formData))
 
         console.log(data.filelocation); 
       } catch (error) {
@@ -146,11 +145,6 @@ function UserDetails() {
     }));
 
   }
-
-  
-
-  const USERINFO = useSelector(state => state.rootReducer.fullUserInfo)
-
 
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -206,9 +200,9 @@ function UserDetails() {
     <div className='content-center h-screen bg-black'>
     <div className='w-[75vw] h-[80vh] m-auto content-center bg-black text-center border rounded-xl'>
         <form onSubmit={handleSubmit} className='flex-col gap-10 '>
-            <div className="prof bg-red-600 border-2 w-20 h-20 rounded-full m-auto mb-10">
+            <div className={`prof bg-[url(${formData.profilePicture || "https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"}) border-2 w-20 h-20 rounded-full m-auto mb-10`}>
               <input onChange={handleFileChange} ref={fileInputRef} className='text-black hidden gsap' type="file" name="picture" id="picture" placeholder='' /><br /><br />
-              <button className='gsap' type='button' onClick={handleButtonClick}>Upload</button>
+              <button className='gsap w-[100%] h-[100%] cursor-pointer' type='button' onClick={handleButtonClick}>+</button>
             </div>
             
             <div className="names justify-center items-center flex gap-5 ">
