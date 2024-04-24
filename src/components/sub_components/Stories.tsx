@@ -36,7 +36,7 @@ function Stories(): JSX.Element {
     <>
       <div className="story-class gradient-border m-10 glass-blur flex w-[90%] overflow-x-auto no-scrollbar rounded-xl min-h-24">
         <AddStories />
-        {stories?.map((story, index) => (
+        {stories?.map((story: any, index) => (
           <WatchStories key={index} user={story.user} image={story.story} />
         ))}
       </div>

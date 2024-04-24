@@ -1,6 +1,5 @@
 // pages/api/post.ts
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getSession } from 'next-auth/react';
 import dbConnect from '../../../../utils/dbConnect';
 import { ObjectId } from 'mongodb';
 import jwt from 'jsonwebtoken';
@@ -19,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const token = req.cookies.token;
 
           if(token){
-            const decodedToken = jwt.verify(token, secretkey);
+            const decodedToken: any = jwt.verify(token, secretkey);
             const userId = decodedToken.id; 
 
             try {

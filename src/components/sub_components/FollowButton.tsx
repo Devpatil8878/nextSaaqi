@@ -3,9 +3,9 @@ import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-hot-toast';
 
-const UserCard = async ({ userData, isDarkMode }) => {
+const UserCard = async ({ userData , isDarkMode }: any) => {
   const [isFollowing, setIsFollowing] = useState(false);
-  const userinfo = useSelector(state => state.rootReducer.user);
+  const userinfo = useSelector((state: any) => state.rootReducer.user);
 
 
   useEffect(() => {

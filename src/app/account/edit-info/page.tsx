@@ -28,21 +28,44 @@ const firebaseApp = initializeApp(firebaseConfig);
 const firebaseAuth = getAuth(firebaseApp);
 
 
+interface RootState {
+  rootReducer: any;
+  isLoggedIn: boolean;
+  isDarkMode: boolean;
+  user: User | null; // User can be null initially or after logout
+  fullUserInfo: FullUserInfo | null; // FullUserInfo can be null initially or after logout
+  tempUser?: TempUser; // Optional property for temporary user data
+  isStoryClicked: boolean;
+}
+
+interface User {
+  // Define properties of User object here (e.g., id, name, email)
+}
+
+interface FullUserInfo {
+  // Define properties of FullUserInfo object here (e.g., more detailed user info)
+}
+
+interface TempUser {
+  // Define properties of TempUser object here (if needed)
+}
+
 function UserDetails() {
 
   const router = useRouter()
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [file, setFile] = useState<File>();
   const [status, setStatus] = useState('');
 
   const handleButtonClick = () => {
-    fileInputRef.current.click();
+    if(fileInputRef.current)
+      fileInputRef.current.click();
   };
 
-  const TEMPUSER = useSelector(state => state.rootReducer.tempUser)
+  const TEMPUSER = useSelector((state: RootState) => state.rootReducer.tempUser)
   const dispatch = useDispatch()
-  const FULLUSERINFO = useSelector(state => state.rootReducer.fullUserInfo)
+  const FULLUSERINFO = useSelector((state: RootState) => state.rootReducer.fullUserInfo)
 
 
   useEffect(() => {
@@ -78,12 +101,12 @@ function UserDetails() {
     email: email,
     password: "",
     bio: "",
-    profilepicture: ""
+    profilePicture: ""
   });
 
   const [filepath, setFilepath] = useState("");
 
-  const handleFileChange = async (event) => {
+  const handleFileChange = async (event:any) => {
     console.log("IMAGEUSER: ",FULLUSERINFO)
     const userString = JSON.stringify(FULLUSERINFO);
 
@@ -106,7 +129,7 @@ function UserDetails() {
 
         setFormData(prevState => ({
           ...prevState,
-          profilepicture: data.filelocation
+          profilePicture: data.filelocation
         }));
 
         dispatch(setUSERFULLINFO(formData))
@@ -137,7 +160,7 @@ function UserDetails() {
 
   };
 
-  const handleUsernameChange = (e) => {
+  const handleUsernameChange = (e:any) => {
     setFormData(prevState => ({
       ...prevState,
       username: e.target.value
@@ -156,7 +179,7 @@ function UserDetails() {
   
   };
 
-  const handleBioChange = (e) => {
+  const handleBioChange = (e:any) => {
     setFormData(prevState => ({
       ...prevState,
       bio: e.target.value

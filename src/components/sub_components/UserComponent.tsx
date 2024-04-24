@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import UserCard from './FollowButton';
 
 interface UserData {
+  _id: string
   fullname: string;
   username?: string;
   email?: string;
@@ -63,7 +64,7 @@ const UserAccount: React.FC<UserAccountProps> = ({ isDarkMode }) => {
           throw new Error('Failed to fetch feed');
         }
         const data = await response.data;
-        const updatedData = data.map(user => ({ ...user, isFollowing: false }));
+        const updatedData = data.map((user: any) => ({ ...user, isFollowing: false }));
         setUserData(updatedData);
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -84,8 +85,8 @@ const UserAccount: React.FC<UserAccountProps> = ({ isDarkMode }) => {
   });
 
   // const [userToFollow, setUserToFollow] = useState({});
-  const userinfo = useSelector(state => state.rootReducer.user);
-  const FULLUSER = useSelector(state => state.rootReducer.fullUserInfo)
+  const userinfo = useSelector((state: any) => state.rootReducer.user);
+  const FULLUSER = useSelector((state: any) => state.rootReducer.fullUserInfo)
 
   let currentuserinfo = {};
   let newuserinfo = "";
@@ -93,7 +94,7 @@ const UserAccount: React.FC<UserAccountProps> = ({ isDarkMode }) => {
   let containsNumber123;
 
 
-  const handleFollowClick = async (val, i) => {
+  const handleFollowClick = async (val: any, i: any) => {
     try {
       setLoading(true);
       
@@ -121,7 +122,6 @@ const UserAccount: React.FC<UserAccountProps> = ({ isDarkMode }) => {
       if(resFollow.status === 200){
         setUserData(prevData => {
           const updatedData = [...prevData];
-          updatedData[i].isFollowing = !updatedData[i].isFollowing;
           return updatedData;
         });
         setLoading(false);
@@ -130,7 +130,6 @@ const UserAccount: React.FC<UserAccountProps> = ({ isDarkMode }) => {
       if(resUnfollow.status === 201){
         setUserData(prevData => {
           const updatedData = [...prevData];
-          updatedData[i].isFollowing = !updatedData[i].isFollowing;
           return updatedData;
         });
         setLoading(false);

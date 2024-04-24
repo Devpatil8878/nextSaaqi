@@ -14,7 +14,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   try {
-    const decodedToken = jwt.verify(token, secretKey);
+    const decodedToken: any = jwt.verify(token, secretKey);
     const userId = decodedToken.id; 
 
     const userData = await User.findById(userId);

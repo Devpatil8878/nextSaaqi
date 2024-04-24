@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/chat/Loading.js", "src/app/Load.js", "src/app/chat/[[...user]].js", "src/pages/api/uploadimage"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/chat/Loading.js", "src/app/Load.js", "src/app/chat/[[...user]].js", "src/pages/api/uploadimage", "models/Post.js"],
   "exclude": ["node_modules"]
 }

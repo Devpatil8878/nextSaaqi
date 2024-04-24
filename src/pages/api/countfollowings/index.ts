@@ -1,7 +1,7 @@
 import User from '../../../../models/User';
 import dbConnect from '../../../../utils/dbConnect';
 
-export default async function handler(req, res) {
+export default async function handler(req: any, res: any) {
   await dbConnect();
 
   try {
@@ -17,7 +17,7 @@ export default async function handler(req, res) {
     const followingCount = user.followings.length;
 
     res.status(200).json({ success: true, followingCount });
-  } catch (error) {
+  } catch (error: any) {
     res.status(500).json({ success: false, error: error.message });
   }
 }

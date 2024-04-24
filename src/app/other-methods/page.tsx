@@ -43,7 +43,7 @@ const facebookProvider = new FacebookAuthProvider();
 
 const page = () => {
 
-  const USER = useSelector(state => state.rootReducer.user);
+  const USER = useSelector((state : any) => state.rootReducer.user);
   const router = useRouter()
   const dispatch = useDispatch();
 

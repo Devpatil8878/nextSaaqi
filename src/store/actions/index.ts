@@ -21,7 +21,7 @@ export const toggleDarkMode = () => ({
   type: TOGGLE_DARK_MODE,
 });
 
-export const setUSER = (user) => ({
+export const setUSER = (user: any) => ({
   type: SET_USER,
   payload: {
     fullname: user.displayName,
@@ -29,7 +29,7 @@ export const setUSER = (user) => ({
   }
 })
 
-export const setUSERFULLINFO = (user) => ({
+export const setUSERFULLINFO = (user: any) => ({
   type: SET_USERFULLINFO,
   payload: {
     fullname: user.fullname,
@@ -40,7 +40,7 @@ export const setUSERFULLINFO = (user) => ({
   }
 })
 
-export const setTEMPUSER = (user) => ({
+export const setTEMPUSER = (user: any) => ({
   type: SET_TEMPUSER,
   payload: {
     fullname: user.displayName,
@@ -48,7 +48,7 @@ export const setTEMPUSER = (user) => ({
   }
 })
 
-export const setSTORYCLICKED = (val) => ({
+export const setSTORYCLICKED = (val: any) => ({
   type: SET_STORYCLICKED,
   payload: {
     isStoryClicked: val

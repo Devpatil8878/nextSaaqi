@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 const Profile: React.FC = () => {
 
-  const FULLUSER = useSelector(state => state.rootReducer.fullUserInfo)
+  const FULLUSER = useSelector((state: any) => state.rootReducer.fullUserInfo)
 
   return (
     <>

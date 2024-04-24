@@ -12,7 +12,7 @@ import { toggleDarkMode } from '../../store/actions/index';
 
 
 
-const MaterialUISwitch = styled(Switch)<{ theme: Theme }>((props) => ({
+const MaterialUISwitch = styled(Switch)<{ theme: any }>((props) => ({
   width: 62,
   height: 34,
   padding: 7,
@@ -31,13 +31,13 @@ const MaterialUISwitch = styled(Switch)<{ theme: Theme }>((props) => ({
       '& + .MuiSwitch-track': {
         opacity: 1,
         backgroundColor:
-          props.theme.palette.mode === 'dark' ? '#8796A5' : '#aab4be',
+          props.theme === 'dark' ? '#8796A5' : '#aab4be',
       },
     },
   },
   '& .MuiSwitch-thumb': {
     backgroundColor:
-      props.theme.palette.mode === 'dark' ? '#003892' : '#001e3c',
+      props.theme === 'dark' ? '#003892' : '#001e3c',
     width: 32,
     height: 32,
     '&::before': {
@@ -57,7 +57,7 @@ const MaterialUISwitch = styled(Switch)<{ theme: Theme }>((props) => ({
   '& .MuiSwitch-track': {
     opacity: 1,
     backgroundColor:
-      props.theme.palette.mode === 'dark' ? '#8796A5' : '#aab4be',
+      props.theme === 'dark' ? '#8796A5' : '#aab4be',
     borderRadius: 20 / 2,
   },
 }));
@@ -69,7 +69,7 @@ const MaterialUISwitch = styled(Switch)<{ theme: Theme }>((props) => ({
 
 const Settings = () => {
 
-    const isDarkMode = useSelector(state => state.rootReducer.isDarkMode);
+    const isDarkMode = useSelector((state : any) => state.rootReducer.isDarkMode);
     const backColor = isDarkMode ? "dark-mode-bg" : "light-mode-bg"
     const dispatch = useDispatch();
 
@@ -86,7 +86,7 @@ const Settings = () => {
       <div className='ml-72 pl-20 pt-20 absolute top-28 border border-zinc-500 h-[60vh] w-[60vw] rounded-xl'>
         <FormGroup>
           <FormControlLabel
-            control={<MaterialUISwitch sx={{ m: 1 }} />}
+            control={<MaterialUISwitch sx={{ m: 1 }} theme={"dark" as any} />}
             checked={isDarkMode}
             label={isDarkMode ? 'Dark Mode' : 'Light Mode'}
             onChange={switchChange}

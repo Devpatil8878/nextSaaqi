@@ -28,7 +28,7 @@ export const config = {
   },
 };
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: any, res: any) {
   try {
     upload.single('file')(req, res, async (err: any) => {
       if (err instanceof multer.MulterError) {

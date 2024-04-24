@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react'
-import User from '../../../../models/User'; 
+import User from '../../../models/User'; 
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGSAP } from '@gsap/react';
@@ -22,12 +22,12 @@ interface PostProps {
 const Post: React.FC<PostProps> = ({ isDarkMode }) => {
 
   const router = useRouter()
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [postContent, setPostContent] = useState<string>('');
 
-  const USERINFO = useSelector(state => state.rootReducer.fullUserInfo)
-  const FULLUSERINFO = useSelector(state => state.rootReducer.fullUserInfo)
+  const USERINFO = useSelector((state: any) => state.rootReducer.fullUserInfo)
+  const FULLUSERINFO = useSelector((state: any) => state.rootReducer.fullUserInfo)
 
   const [userEmail, setUserEmail] = useState();
 
@@ -59,10 +59,11 @@ const Post: React.FC<PostProps> = ({ isDarkMode }) => {
 
 
   const handleButtonClick = () => {
-    fileInputRef.current.click();
+    if(fileInputRef.current)
+      fileInputRef.current.click();
   };
   
-  const handleFileChange = async (event) => {
+  const handleFileChange = async (event: any) => {
     console.log("IMAGEUSER: ",FULLUSERINFO)
     const userString = JSON.stringify(FULLUSERINFO);
 
@@ -112,7 +113,7 @@ const Post: React.FC<PostProps> = ({ isDarkMode }) => {
 
   };
 
-  const handleContentChange = (e) => {
+  const handleContentChange = (e: any) => {
     setPostContent(e.target.value)
     setFormData(prevState => ({
       ...prevState,
@@ -175,7 +176,7 @@ const Post: React.FC<PostProps> = ({ isDarkMode }) => {
     })
 })
 
-const fullUserInfo = useSelector(state => state.rootReducer.fullUserInfo)
+const fullUserInfo = useSelector((state: any) => state.rootReducer.fullUserInfo)
 
   return (
     <>

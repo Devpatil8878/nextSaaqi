@@ -29,7 +29,7 @@ const NonLoggedInHomePage = () => {
   const router = useRouter();
   const ref = useRef();
 
-  const mount = useRef(null);
+  const mount = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (mount.current === null) return;
@@ -119,7 +119,8 @@ const NonLoggedInHomePage = () => {
   const handleScroll = () => {
     // Update background scrolling speed
     const scrollY = window.scrollY;
-    mount.current.style.transform = `translateY(-${scrollY * 0.5}px)`; // Adjust the factor to control the speed of background scrolling
+    if(mount.current)
+      mount.current.style.transform = `translateY(-${scrollY * 0.5}px)`; // Adjust the factor to control the speed of background scrolling
   };
 
   useEffect(() => {

@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700');
 
-/* Styles for the background stars */
 .stars {
   width: 1px;
   height: 1px;
@@ -11,16 +10,12 @@
 .stars {
   width: 2px;
   height: 2px;
-  /* Insert multiple box shadow values here */
-  box-shadow: /* Replace $shadows-medium with multiple box-shadow values */;
   animation: animStar 100s linear infinite;
 }
 
 .stars {
   width: 3px;
   height: 3px;
-  /* Insert multiple box shadow values here */
-  box-shadow: /* Replace $shadows-big with multiple box-shadow values */;
   animation: animStar 150s linear infinite;
 }
 

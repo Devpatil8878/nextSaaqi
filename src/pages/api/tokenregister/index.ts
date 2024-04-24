@@ -3,7 +3,7 @@ import dbConnect from '../../../../utils/dbConnect';
 import User from '../../../../models/User';
 import bcrypt from 'bcryptjs';
 
-export default async function handler(req, res) {
+export default async function handler(req: any, res: any) {
   await dbConnect();
 
   const { fullname, username, email, password, confirmpassword, profilepicture } = req.body;
@@ -21,7 +21,7 @@ export default async function handler(req, res) {
       confirmpassword: hashedPassword
     });
     res.status(201).json({ success: true, data: user });
-  } catch (error) {
+  } catch (error: any) {
     res.status(400).json({ success: false, error: error.message });
   }
 }

@@ -1,7 +1,7 @@
 import { NextApiResponse } from 'next';
 import Story from '../../../../models/Story'; // Import the Story model
 
-export default async function handler(req, res: NextApiResponse) {
+export default async function handler(req: any, res: NextApiResponse) {
   if (req.method !== 'GET') {
     return res.status(405).json({ message: 'Method Not Allowed' });
   }

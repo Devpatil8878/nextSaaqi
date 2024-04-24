@@ -3,12 +3,12 @@ import { Server } from 'socket.io';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 
-const handler = (req: NextApiRequest, res: NextApiResponse) => {
+const handler = (req: any, res: any) => {
 
   
-  if (!res.socket.server.io) {
+  if (!req.socket.server.io) {
     console.log('Creating server...');
-    const httpServer = res.socket.server;
+    const httpServer = req.socket.server;
 
     const io = new Server(httpServer, {
       cors: {

@@ -12,10 +12,15 @@ import { ChevronDown, Info, Paperclip, Phone, Send, Video } from "lucide-react"
 import io from 'socket.io-client';
 import { Button } from "@/components/ui/button"
 import Link from 'next/link'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/navigation'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react';
+import { login, setTEMPUSER, setUSER, setUSERFULLINFO } from '@/store/actions'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { initializeApp } from 'firebase/app'
+import axios from 'axios'
+import mongoose from 'mongoose'
 
 const socket = io()
 
@@ -37,41 +42,6 @@ let newMessages = [
   },
   {
     id: 1,
-    name: "Alex",
-    profile: "https://images.unsplash.com/photo-1682687979601-082a1295b78f?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    message: "Hi",
-    isActive: true
-  },
-  {
-    id: 2,
-    name: "Axel",
-    profile: "https://plus.unsplash.com/premium_photo-1676637656198-e2bbf752103a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHx8",
-    message: "How are you doin'",
-    isActive: true
-  },
-  {
-    id: 1,
-    name: "Alex",
-    profile: "https://images.unsplash.com/photo-1682687979601-082a1295b78f?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    message: "Hi",
-    isActive: false
-  },
-  {
-    id: 2,
-    name: "Axel",
-    profile: "https://plus.unsplash.com/premium_photo-1676637656198-e2bbf752103a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHx8",
-    message: "How are you doin'",
-    isActive: true
-  },
-  {
-    id: 1,
-    name: "Alex",
-    profile: "https://images.unsplash.com/photo-1682687979601-082a1295b78f?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    message: "Hi",
-    isActive: true
-  },
-  {
-    id: 1,
     name: "Axel",
     profile: "https://plus.unsplash.com/premium_photo-1676637656198-e2bbf752103a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHx8",
     message: "How are you doin'",
@@ -86,30 +56,9 @@ let newMessages = [
   },
   {
     id: 1,
-    name: "Alex",
-    profile: "https://images.unsplash.com/photo-1682687979601-082a1295b78f?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    message: "Hi",
-    isActive: false
-  },
-  {
-    id: 1,
     name: "Axel",
     profile: "https://plus.unsplash.com/premium_photo-1676637656198-e2bbf752103a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHx8",
     message: "How are you doin'",
-    isActive: true
-  },
-  {
-    id: 2,
-    name: "Axel",
-    profile: "https://plus.unsplash.com/premium_photo-1676637656198-e2bbf752103a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHx8",
-    message: "How are you doin'",
-    isActive: true
-  },
-  {
-    id: 1,
-    name: "Alex",
-    profile: "https://images.unsplash.com/photo-1682687979601-082a1295b78f?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    message: "Hi",
     isActive: true
   },
   {
@@ -121,20 +70,6 @@ let newMessages = [
   },
   {
     id: 2,
-    name: "Axel",
-    profile: "https://plus.unsplash.com/premium_photo-1676637656198-e2bbf752103a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHx8",
-    message: "How are you doin'",
-    isActive: true
-  },
-  {
-    id: 1,
-    name: "Alex",
-    profile: "https://images.unsplash.com/photo-1682687979601-082a1295b78f?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    message: "Hi",
-    isActive: true
-  },
-  {
-    id: 1,
     name: "Axel",
     profile: "https://plus.unsplash.com/premium_photo-1676637656198-e2bbf752103a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHx8",
     message: "How are you doin'",
@@ -226,29 +161,149 @@ let Users = [
 ]
 
 interface userType {
-  USER: {
-    id: number,
-    displayName: string,
-    email: string
-  },
+  sender: string
+  content: string
+  timestamp: Date
+  currentUser: currentUser
   message: string
+}
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAwFJqTHIokgnBZw-F9fdihAOV0AutSJMU",
+  authDomain: "saaqi-194de.firebaseapp.com",
+  projectId: "saaqi-194de",
+  storageBucket: "saaqi-194de.appspot.com",
+  messagingSenderId: "178575618437",
+  appId: "1:178575618437:web:3a0b80ddb4da44ac04d4ec",
+  measurementId: "G-L17RZF5ZKF",
+  databaseURL: "https://saaqi-194de-default-rtdb.firebaseio.com/"
+};
+
+
+const firebaseApp = initializeApp(firebaseConfig);
+const firebaseAuth = getAuth(firebaseApp);
+
+interface currentUser{
+  _id: string
+  fullname: string
+  username: string
+  email: string
+  password: string
+  confirmpassword: string
+  profilePicture: string
+  bio: string
+  likes: [{}]
+  posts: [{}]
+  stories: [{}]
+  followers: [{}]
+  followings: [{}]
+
+}
+
+interface RootState {
+  rootReducer: any;
+  isLoggedIn: boolean;
+  isDarkMode: boolean;
+  user: User | null; // User can be null initially or after logout
+  fullUserInfo: FullUserInfo | null; // FullUserInfo can be null initially or after logout
+  tempUser?: TempUser; // Optional property for temporary user data
+  isStoryClicked: boolean;
+}
+
+interface User {
+}
+
+interface FullUserInfo {
+}
+
+interface TempUser {
 }
 
 const Chat = () => {
 
+   const TEMPUSER = useSelector((state: RootState)  => state.rootReducer.tempUser)
+  
+
+  const isDarkMode = useSelector((state: RootState)  => state.rootReducer.isDarkMode);
+  const backColor = isDarkMode ? "dark-mode-bg" : "light-mode-bg"
+
+  const dispatch = useDispatch();
+
+  const [isLoggedIn,setIsLoggedIn] = useState(false);
+
+  const [userData, setUserData] = useState<currentUser>({} as currentUser);
+  const [loading, setLoading] = useState(true);
+  let [googleLogged, setGoogleLogged] = useState<boolean>(false);
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    onAuthStateChanged(firebaseAuth, async (user) => {
+      if(user){
+        setUser(user);
+        const res = await axios.get(`api/findUserByEmail?email=${user.email}`)
+        dispatch(setUSERFULLINFO(res.data.user));
+        setGoogleLogged(true)
+        setIsLoggedIn(true)
+        dispatch(setTEMPUSER(user));
+        console.log("TEMP USER: ", TEMPUSER)
+        dispatch(setUSER(res.data.user))
+        setUserData(res.data.user); 
+        console.log("MY USER",res.data.user)
+        console.log("USER DATA",userData)
+      }
+      else{
+        setUser("");
+      }
+    })
+
+  }, [])
+
+
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch('/api/user/');
+        if (response.ok) {
+          const data = await response.json();
+          setIsLoggedIn(true)
+          setUserData(data.user); 
+          dispatch(login())
+          dispatch(setUSER(data.user))
+          console.log("MY LOCAL USER ",data.user)
+        } else {
+          console.error('Failed to fetch user data:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+
+
   const router = useRouter();
 
-  const isLoggedIn = useSelector(state => state.rootReducer.isLoggedIn);
 
-if(!isLoggedIn){
-  router.push('/login')
-}
+useEffect(() => {
+  if(!userData){
+    router.push('/login')
+  }
+}, [userData])
 
 
-  const [messages, setMessages] = useState<userType[]>([]);
+
+
+
+  const [messages, setMessages] = useState<userType[] | undefined>([]);
   const [messageInput, setMessageInput] = useState('');
-  const USER = useSelector(state => state.rootReducer.user);
-  console.log(`current user: ${USER.displayName}`)
+  const USER = useSelector((state: RootState)  => state.rootReducer.user);
+  console.log(`current user: ${userData?.fullname}`)
 
   const pathname = usePathname()
   const isActive = (href: String) => pathname === href;
@@ -261,7 +316,7 @@ if(!isLoggedIn){
 
   useEffect(() => {
     socket.on('chat message', message => {
-      setMessages(prevMessages => [...prevMessages, message]);
+        setMessages((prevMessages: any) => [...prevMessages, message]);
     });
     
   }, []);
@@ -271,10 +326,10 @@ if(!isLoggedIn){
 
   const sendMessage = () => {
     
-    const messageWithUser = { USER, message: messageInput };
+    const messageWithUser = { userData, message: messageInput };
     if (messageInput.trim() !== '') {
-      socket.emit('chat message', messageWithUser); 
-      setMessageInput(''); 
+      socket.emit('chat message', messageWithUser); // Send message to server
+      setMessageInput(''); // Clear input field
     }
     console.log(messageWithUser)
   };
@@ -387,13 +442,13 @@ if(!isLoggedIn){
 
                     <div className="flex-grow-reverse chat-profile-shadow overflow-y-scroll no-scrollbar overflow-x-hidden py-10 pb-32 gap-10 px-14 mt-3 chat-bg-image fill-transparent w-[90%] h-[85%] m-auto rounded-2xl">
                        <div className="overlay"></div>
-                      {messages?.map((ele, index)=>{
+                      {messages?.map((ele: any, index: any)=>{
                         return (
-                          <div className={`flex ${ele.USER.displayName == USER.displayName ? "justify-end" : "justify-start" } mt-7 h-5 z-10`} key={index}>
-                            <a href="" key={index} className={`relative h-10 text-sm self-center content-center px-5 rounded-2xl ${ele.USER.displayName == USER.displayName  ? "bg-[#268bf0] rounded-br-none" : "bg-[#424656] rounded-bl-none" } `}>
+                          <div className={`flex ${ele.userData.fullname == userData?.fullname ? "justify-end" : "justify-start" } mt-7 h-5 z-10`} key={index}>
+                            <a href="" key={index} className={`relative h-10 text-sm self-center content-center px-5 rounded-2xl ${ele.userData.fullname == userData?.fullname  ? "bg-[#268bf0] rounded-br-none" : "bg-[#424656] rounded-bl-none" } `}>
                               {ele.message}
-                              <div className={`text-[0.7rem] gsap bottom-[-1rem] absolute text-zinc-400 ${ele.USER.displayName == USER.displayName ? "right-0" : "left-0"}`}>
-                                {ele.USER.displayName == USER.displayName ? "You" : "Anonymous User"}
+                              <div className={`text-[0.7rem] gsap bottom-[-1rem] ${ele.userData.fullname == userData?.fullname ? "" : "w-[10rem]"} absolute text-zinc-400 ${ele.userData.fullname == userData?.fullname ? "right-0" : "left-0"}`}>
+                                {ele.userData.fullname == userData?.fullname ? "You" : ele.userData.fullname}
                               </div>
                             </a>
                           </div>

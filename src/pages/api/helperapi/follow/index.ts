@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import dbConnect from "../../../../../utils/dbConnect";
 
 
-export default async function handler(req, res) {
+export default async function handler(req: any, res: any) {
   const { method } = req;
 
   await dbConnect();
@@ -21,7 +21,7 @@ export default async function handler(req, res) {
         }
 
         // Check if the followingId is already in the followings array
-        if (user.followings.some(following => following.user.toString() === followingId)) {
+        if (user.followings.some((following: any) => following.user.toString() === followingId)) {
           return res.status(400).json({ success: false, message: 'User is already in the followings list' });
         }
 
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
         await user.save();
 
         return res.status(200).json({ success: true, message: 'User added to followings list' });
-      } catch (error) {
+      } catch (error: any) {
         return res.status(500).json({ success: false, error: error.message });
       }
 
@@ -49,7 +49,7 @@ export default async function handler(req, res) {
           }
   
           // Check if the followingId exists in the followings array
-          const followingIndex = user.followings.findIndex(following => following.user.toString() === followingId);
+          const followingIndex = user.followings.findIndex((following: any) => following.user.toString() === followingId);
           if (followingIndex === -1) {
             return res.status(404).json({ success: false, message: 'User is not in the followings list' });
           }
@@ -59,7 +59,7 @@ export default async function handler(req, res) {
           await user.save();
   
           return res.status(200).json({ success: true, message: 'User removed from followings list' });
-        } catch (error) {
+        } catch (error: any) {
           return res.status(500).json({ success: false, error: error.message });
         }
       default:

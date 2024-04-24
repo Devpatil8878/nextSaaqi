@@ -2,7 +2,7 @@ import axios from 'axios';
 import User from '../../../../models/User'
 
 
-export default async function handler(req, res) {
+export default async function handler(req: any, res: any) {
   if (req.method !== 'GET') {
     return res.status(405).json({ message: 'Method Not Allowed' });
   }

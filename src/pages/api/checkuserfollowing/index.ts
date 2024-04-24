@@ -1,7 +1,7 @@
 import User from "../../../../models/User";
 import dbConnect from "../../../../utils/dbConnect";
 
-export default async function handler(req, res) {
+export default async function handler(req: any, res: any) {
   
     await dbConnect();
   
@@ -14,7 +14,7 @@ export default async function handler(req, res) {
             return res.status(201).json({ success: false, message: 'User not found' });
           }
   
-          if (user.followings.some(following => JSON.stringify(following.user) === JSON.stringify(followingId))) {
+          if (user.followings.some((following: any) => JSON.stringify(following.user) === JSON.stringify(followingId))) {
             
             return res.status(200).json({ success: true, message: 'User is in the followings list' });
           }
@@ -22,7 +22,7 @@ export default async function handler(req, res) {
           return res.status(201).json({ success: false, message: 'User not found' });
           
 
-        } catch (error) {
+        } catch (error: any) {
           return res.status(500).json({ success: false, error: error.message });
         }
   

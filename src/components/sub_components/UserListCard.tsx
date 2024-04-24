@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux';
 
-const UserListCard = async ({ userData, isDarkMode }) => {
+const UserListCard = async ({ userData, isDarkMode }: any) => {
   const [isFollowing, setIsFollowing] = useState(false);
   // const userinfo = useSelector(state => state.rootReducer.user);
 
-  const [userinfo,setuserinfo] = useState();
+  const [userinfo,setuserinfo] = useState<any>();
 
   useEffect(() => {
 
@@ -31,10 +31,9 @@ const UserListCard = async ({ userData, isDarkMode }) => {
     const checkIsFollowing = async () => {
       try {
 
-        const newUserinfo = await axios.get(`api/findUserByEmail?email=${userinfo.email}`)
+        const newUserinfo = await axios.get(`api/findUserByEmail?email=${userinfo?.email}`)
         const newVal = await axios.get(`api/findUserByEmail?email=${userData.email}`)
 
-        // Make an API call to check if the logged-in user is following this user
         const response = await axios.get(`/api/checkuserfollowing?currentUserId=${newUserinfo.data.user._id}&followingId=${newVal.data.user._id}`);
 
         if(response.status == 200)

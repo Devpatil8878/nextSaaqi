@@ -34,7 +34,7 @@ const firebaseAuth = getAuth(firebaseApp);
 const Navbar = () => {
   const router = useRouter();
 
-  const isDarkMode = useSelector(state => state.rootReducer.isDarkMode);
+  const isDarkMode = useSelector((state : any) => state.rootReducer.isDarkMode);
   const backColor = isDarkMode ? "dark-mode-bg" : "light-mode-bg"
   const dispatch = useDispatch()
 

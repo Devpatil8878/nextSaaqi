@@ -17,7 +17,7 @@ import { GoogleAuthProvider,GithubAuthProvider, getAuth, onAuthStateChanged, sig
 import { useFirebase } from '@/context/Firebase';
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, set } from 'firebase/database'
-import { setTEMPUSER, setUSERFULLINFO } from "@/store/actions";
+import { login, setTEMPUSER, setUSER, setUSERFULLINFO } from "@/store/actions";
 import axios from "axios";
 import Storypopup from "./sub_components/Storypopup";
 
@@ -45,10 +45,10 @@ const githubProvider = new GithubAuthProvider();
 
 function Homepage() {
 
-  const TEMPUSER = useSelector(state => state.rootReducer.tempUser)
+  const TEMPUSER = useSelector((state : any) => state.rootReducer.tempUser)
   
 
-  const isDarkMode = useSelector(state => state.rootReducer.isDarkMode);
+  const isDarkMode = useSelector((state : any) => state.rootReducer.isDarkMode);
   const backColor = isDarkMode ? "dark-mode-bg" : "light-mode-bg"
 
   const dispatch = useDispatch();
@@ -65,8 +65,11 @@ function Homepage() {
         const res = await axios.get(`api/findUserByEmail?email=${user.email}`)
         dispatch(setUSERFULLINFO(res.data.user));
         setGoogleLogged(true)
+        dispatch(login())
         dispatch(setTEMPUSER(user));
         console.log("TEMP USER: ", TEMPUSER)
+        dispatch(setUSER(res.data.user))
+        console.log("MY USER",res.data.user)
       }
       else{
         setUser("");
@@ -84,6 +87,9 @@ function Homepage() {
           const data = await response.json();
           
           setUserData(data.user); 
+          dispatch(login())
+          dispatch(setUSER(data.user))
+          console.log("MY LOCAL USER ",data.user)
         } else {
           console.error('Failed to fetch user data:', response.statusText);
         }
@@ -106,7 +112,7 @@ function Homepage() {
     });
   });
 
-  const isStoryActive = useSelector(state => state.rootReducer.isStoryClicked)
+  const isStoryActive = useSelector((state : any) => state.rootReducer.isStoryClicked)
 
   return (
     <>

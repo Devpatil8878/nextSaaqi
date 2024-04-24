@@ -40,14 +40,14 @@ const githubProvider = new GithubAuthProvider();
 
 const Home = () => {
 
-  const isLoggedIn = useSelector(state => state.rootReducer.isLoggedIn);
+  const isLoggedIn = useSelector((state : any) => state.rootReducer.isLoggedIn);
   const dispatch = useDispatch();
 
 
   useEffect( () => {
     (
       async () => {
-        const LocomotiveScroll = (await import('locomotive-scroll')).default;
+        const LocomotiveScroll = (await import('locomotive-scroll' as any)).default;
         const locomotiveScroll = new LocomotiveScroll();
       }
     )()
@@ -55,7 +55,7 @@ const Home = () => {
 
     const router = useRouter();
 
-    const TEMPUSER = useSelector(state => state.rootReducer.tempUser)
+    const TEMPUSER = useSelector((state : any) => state.rootReducer.tempUser)
 
     useEffect(() => {
       onAuthStateChanged(firebaseAuth, async (user) => {
@@ -84,7 +84,7 @@ const Home = () => {
     }, [])
 
 
-    const temp = useSelector(state => state.rootReducer.fullUserInfo)
+    const temp = useSelector((state : any) => state.rootReducer.fullUserInfo)
     console.log("USER FOUND: ", temp)
 
 

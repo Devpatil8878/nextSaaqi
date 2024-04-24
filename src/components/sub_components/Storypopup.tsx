@@ -34,9 +34,9 @@ const Storypopup = () => {
   const firebaseAuth = getAuth(firebaseApp);
 
   
-  const TEMPUSER = useSelector(state => state.rootReducer.tempUser)
+  const TEMPUSER = useSelector((state: any) => state.rootReducer.tempUser)
   const dispatch = useDispatch()
-  const FULLUSERINFO = useSelector(state => state.rootReducer.fullUserInfo)
+  const FULLUSERINFO = useSelector((state: any) => state.rootReducer.fullUserInfo)
 
 
   const [formData, setFormData] = useState({
@@ -83,7 +83,7 @@ const Storypopup = () => {
 
   const [filepath, setFilepath] = useState("");
 
-  const handleFileChange = async (event) => {
+  const handleFileChange = async (event: any) => {
     console.log("IMAGEUSER: ",FULLUSERINFO)
     const userString = JSON.stringify(FULLUSERINFO);
 
@@ -159,10 +159,11 @@ const Storypopup = () => {
 
 
  
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleButtonClick = () => {
-    fileInputRef.current.click();
+    if(fileInputRef.current)
+      fileInputRef.current.click();
   };
 
 

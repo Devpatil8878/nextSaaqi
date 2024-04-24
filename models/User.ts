@@ -1,6 +1,48 @@
-import mongoose from 'mongoose';
+import mongoose, { ConnectOptions, ObjectId } from 'mongoose';
 
-mongoose.connect('mongodb+srv://DEV:devanand@saaqi.hk5f3oi.mongodb.net/?retryWrites=true&w=majority&appName=Saaqi', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://DEV:devanand@saaqi.hk5f3oi.mongodb.net/?retryWrites=true&w=majority&appName=Saaqi', { useNewUrlParser: true, useUnifiedTopology: true } as ConnectOptions);
+
+
+interface typeUser extends Document {
+    fullname?: string;
+    username?: string; 
+    email?: string;
+    password?: string; 
+    confirmpassword?: string;
+    profilePicture: string;
+    bio: string;
+    likes: Like[];
+    posts: Post[];
+    stories: Story[];
+    followers: Follower[];
+    followings: Following[];
+    createdAt: Date;
+  }
+
+  interface Like {
+    post: ObjectId;
+    createdAt: Date;
+  }
+  
+  interface Post {
+    post: ObjectId;
+    createdAt: Date;
+  }
+  
+  interface Story {
+    story: ObjectId;
+    createdAt: Date;
+  }
+  
+  interface Follower {
+    user: ObjectId;
+    createdAt: Date;
+  }
+  
+  interface Following {
+    user: ObjectId;
+    createdAt: Date;
+  }
 
 
 const UserSchema = new mongoose.Schema({
@@ -101,6 +143,6 @@ const UserSchema = new mongoose.Schema({
     },
 });
 
-const User = mongoose.models.User || mongoose.model('User', UserSchema);
+const User = mongoose.models.User<typeUser> || mongoose.model<typeUser>('User', UserSchema);
 
 export default User;
