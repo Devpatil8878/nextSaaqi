@@ -371,10 +371,10 @@ useEffect(() => {
             <div className="right flex-col relative w-[70%] ">
                     <div className='w-[90%] h-[4rem] flex gsap items-center justify-between rounded-xl m-auto mt-6  '>
                       <div className='flex items-center'>
-                        <img src={`${userData.profilePicture}`} className="dp object-cover rounded-full w-[3rem] h-[3rem] ml-4"></img>
+                        <img src={`${FullChattingUser.profilePicture}`} className="dp object-cover rounded-full w-[3rem] h-[3rem] ml-4"></img>
                         <div className="dets flex-col ml-4">
-                          <h1 className='font-semibold text-sm'>{userData.fullname}</h1>
-                          <h2 className='font-light text-zinc-300 text-[0.7rem]'>{userData.bio}</h2>
+                          <h1 className='font-semibold text-sm'>{chattingUser}</h1>
+                          <h2 className='font-light text-zinc-300 text-[0.7rem]'>{FullChattingUser.bio}</h2>
                         </div>
                       </div>
                       <div className='flex gap-5 '>

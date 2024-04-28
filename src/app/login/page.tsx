@@ -55,7 +55,7 @@ const Login = () => {
       } else {
         const data = await response.json();
         console.log(data.message || 'Error logging in');
-        toast.error('Error logging in', {
+        toast.error(data.message, {
           position: 'bottom-right',
           style: {
             backgroundColor: "black",
@@ -64,10 +64,10 @@ const Login = () => {
           }
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error:', error);
       console.log('Internal Server Error');
-      toast.error('Internal Server Error', {
+      toast.error(error, {
         position: 'bottom-right',
         style: {
           backgroundColor: "black",

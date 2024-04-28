@@ -20,12 +20,22 @@ const handler = (req: any, res: any) => {
       console.log('a user connected');
 
       socket.on('chat message', message => {
-        console.log('message:', message);
+        console.log('message:', message.room);
         io.emit('chat message', message);
       });
 
       socket.on('disconnect', () => {
         console.log('user disconnected');
+      });
+
+      socket.on('joinRoom', (room) => {
+        socket.join(room);
+        console.log(`User ${socket.id} joined room ${room}`);
+      });
+
+      socket.on('leaveRoom', (room) => {
+        socket.leave(room);
+        console.log(`User ${socket.id} left room ${room}`);
       });
     });
 
