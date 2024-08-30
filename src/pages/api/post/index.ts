@@ -79,14 +79,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               res.status(500).json({ message: 'Internal Server Error' });
             }
           }
-
-        // }
-
-      //   else {
-      //    res.status(405).json({ message: 'Method Not Allowed' });
-      //  }
       
-    
 
       return res.status(401).json({ message: 'Unauthorized' });
 

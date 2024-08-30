@@ -193,7 +193,7 @@ function Account() {
             <h1>{userFollowings }</h1> <span className='ml-[-7%] gsap'>followings</span>
           </div>
 
-          <h1 className='mt-4 font-semibold gsap'>{currentUser?.fullname }</h1>
+          {/* <h1 className='mt-4 font-semibold gsap'>{currentUser?.fullname }</h1> */}
           <h1 className='font-thin gsap'>{currentUser?.bio }</h1>
         </div>
 

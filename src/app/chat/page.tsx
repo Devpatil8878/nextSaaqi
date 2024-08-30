@@ -1,3 +1,5 @@
+//chat.ts
+
 "use client"
 
 import { usePathname } from 'next/navigation'
@@ -109,13 +111,13 @@ interface TempUser {
 
 const Chat = (req: NextApiRequest, res: NextApiResponse) => {
 
-  const [newMessages, setNewMessage] = useState<currentUser>([]);
+  const [newMessages, setNewMessage] = useState<currentUser[]>([]);
   
 
   useEffect( () => {
     const func = async () => {
       try{
-        const userlist = await axios.get("/api/alluserslist")
+        const userlist = await axios.get("/api/chat/users?search=3clouds8878@gmail.com")
         setNewMessage(userlist.data);
         console.log(userlist.data)
   
@@ -317,7 +319,7 @@ useEffect(() => {
                   <CollapsibleContent>
                   <div>
                     {
-                      newMessages.map((elem, index) => (
+                      messages.map((elem: any, index: any) => (
                         <Link href={`/chat/${elem.username}`} key={index} className={`${
                             isActive(`/chat/${elem.fullname}`) ? "bg-[#268bf0]" : "chat-compo-bg"
                           } message gsap hover:drop-shadow-[0_35px_35px_rgba(38,139,240,0.45)] hover:bg-[#268bf0] w-[22rem] mb-4 h-[4.7rem] rounded-xl flex items-center`}

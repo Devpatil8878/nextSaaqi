@@ -471,7 +471,7 @@ const NonLoggedInHomePage = () => {
             >
               SAAQI
             </h1>
-            <p className="font-[sathosi] gsap font-2xl">
+            <div className="font-[sathosi] gsap font-2xl">
               <b className="font-[Time-new-Roman] gsap text-xl">
                 Introducing Saaqi{" "}
               </b>{" "}
@@ -487,7 +487,7 @@ const NonLoggedInHomePage = () => {
                 Join Saaqi today and embark on a journey of creativity,
                 connection, and community.
               </p>
-            </p>
+            </div>
             <h3 className="text-3xl bg-gradient-to-t gsap from-teal-300 via-rose-500 to-violet-800 bg-clip-text text-transparent">
               ADVANCE
             </h3>
